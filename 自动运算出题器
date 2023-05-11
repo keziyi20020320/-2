@@ -1,0 +1,132 @@
+#include<iostream>
+using namespace std;
+#include<stdio.h>
+#include<stdlib.h>
+#include<string.h>
+#include<time.h>
+char Operator(int* flag)
+{
+    char op;
+    int fflag;
+    fflag= *flag;
+    if (fflag == 1) 
+    {
+        return '+';
+    }
+    else if (fflag == 2)
+    {
+        return '-';
+    }
+    else if (fflag == 3)
+    {
+        return '*';
+    }
+    else if (fflag == 4)
+    {
+        return '/';
+    }
+    else if (fflag == 5)
+    {
+        int i;
+        i = rand() % 4 + 1;
+        switch (i)
+        {
+        case 1: return '+';
+        case 2: return '-';
+        case 3: return '*';
+        case 4: return '/';
+        }
+    }
+}
+
+void integer(int* max, int* flag)
+{
+    int mmax;
+    mmax = *max;
+    int x, y;
+    char op;
+    x = rand() % mmax + 1;
+    y = rand() % mmax + 1;
+    op = Operator(flag);
+    if (op == '-')
+        while (x < y)
+        {
+            x = rand() % mmax + 1;
+            y = rand() % mmax + 1;
+        }
+    cout << x << op << y << "=" << endl;
+}
+
+void fraction(int * max, int* flag)
+{
+    int mmax;
+    mmax = *max;
+    int a, b, c, d;
+    a = rand() % mmax + 1;
+    b = rand() % mmax + 1;
+    c = rand() % mmax + 1;
+    d = rand() % mmax + 1;
+    char op;
+    while (a <= b || c <= d)
+    {
+        a = rand() % mmax + 1;
+        b = rand() % mmax + 1;
+        c = rand() % mmax + 1;
+        d = rand() % mmax + 1;
+    }
+    op = Operator(flag);
+    if (op == '-')
+        while ((b * c - a * d) < 0)
+        {
+            a = rand() % mmax + 1;
+            b = rand() % mmax + 1;
+            c = rand() % mmax + 1;
+            d = rand() % mmax + 1;
+        }
+    cout << b << "/" << a << op << d << "/" << c << "=" << endl;
+}
+
+int main()
+{
+	
+    srand(time(0));
+    int i, n, m;
+    int *max;
+    int mmax;
+    int* flag;
+    int fflag;
+	
+    cout << "请输入出题类型" << endl;
+    cout << "1.整数四则运算" << endl;
+    cout << "2.分数四则运算" << endl;
+    cin >> i;
+	
+    cout << "请输入最大数" << endl;
+    cin>>mmax;
+	
+    cout << "请输入出题数目" << endl;
+    cin >> n;
+	
+    cout << "请输入运算符号" << endl;
+    cout << "1:加法" ;
+    cout << "2:减法" ;
+    cout << "3:乘法" ;
+    cout << "4:除法" ;
+    cout << "5:四则运算混合" << endl;
+    cin >> fflag;
+	
+    max = &mmax;
+    flag = &fflag;
+	 freopen("a.txt", "w", stdout); 
+    for (m = 1; m <= n; m++)
+    {
+        if (i == 1)
+            integer(max,flag);
+        else
+            fraction(max,flag);
+    }
+	
+	system("pause");
+    return 0;
+	
+}
